@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="mynamespace">
+    <insert id="add1">
+        insert into students(id,name,sal) values(1,'哈哈',7000)
+    </insert>
+    <insert id="add2" parameterType="com.min.batis.bean.Student">
+        insert into students(id,name,sal) values(#{id},#{name},#{sal})
+    </insert>
+    <update id="update" parameterType="com.min.batis.bean.Student">
+        update students set name=#{name},sal=#{sal} where id=#{id}
+    </update>
+    <select id="findById" parameterType="int" resultType="com.min.batis.bean.Student">
+        select id,name,sal from students where id=#{anything}
+    </select>
+    <select id="findAll" resultType="com.min.batis.bean.Student">
+        select id,name,sal from students
+    </select>
+    <delete id="delete" parameterType="com.min.batis.bean.Student">
+        delete from students where id=#{id}
+    </delete>
+
+    <!-- 分页 -->
+    <select id="findAllWithFy" parameterType="map" resultType="com.min.batis.bean.Student">
+        select id,name,sal from students limit #{pstart},#{psize}
+    </select>
+    <select id="findAllByNameWithFy" parameterType="map" resultType="com.min.batis.bean.Student">
+        select id,name,sal from students where name like #{pname} limit #{pstart},#{psize}
+    </select>
+
+    <!-- 动态sql -->
+    <select id="dynaSQLwithSelect" parameterType="map" resultType="com.min.batis.bean.Student">
+        select id,name,sal from students
+        <where>
+            <if test="pname!=null">
+                and name=#{pname}
+            </if>
+            <if test="psal!=null">
+                and sal=#{psal}
+            </if>
+        </where>
+    </select>
+
+    <update id="dynaSQLwithUpdate" parameterType="com.min.batis.bean.Student">
+        update students
+        <set>
+            <if test="name!=null">
+                name=#{name},
+            </if>
+            <if test="sal!=null">
+                sal=#{sal},
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+
+    <!-- item表示迭代的参数 -->
+    <delete id="dynaSQLwithDelete">
+        delete from students where id in
+        <foreach collection="array" open="(" close=")" separator="," item="ids">
+            ${ids}
+        </foreach>
+    </delete>
+
+    <!-- 插入 -->
+    <sql id="key">
+        <trim suffixOverrides=",">
+            <if test="id!=null">
+                id,
+            </if>
+            <if test="name!=null">
+                name,
+            </if>
+            <if test="sal!=null">
+                sal,
+            </if>
+        </trim>
+    </sql>
+    <sql id="value">
+        <trim suffixOverrides=",">
+            <if test="id!=null">
+                #{id},
+            </if>
+            <if test="name!=null">
+                #{name},
+            </if>
+            <if test="sal!=null">
+                #{sal},
+            </if>
+        </trim>
+    </sql>
+    <insert id="dynaSQLwithInsert" parameterType="com.min.batis.bean.Student">
+        insert into students(<include refid="key"/>) values(<include refid="value"/>)
+    </insert>
+
+</mapper>
