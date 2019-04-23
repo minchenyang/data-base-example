@@ -1,4 +1,4 @@
-package com.min.demo.jdbc;
+package com.example.jdbc;
 
 
 import com.mysql.cj.jdbc.Driver;

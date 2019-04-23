@@ -1,0 +1,10 @@
+O Object
+R relation
+M mapping
+面向对象编程把所有实体看成对象（object），关系型数据库则是采用实体之间的关系（relation）连接数据。
+很早就有人提出，关系也可以用对象表达，这样的话，就能使用面向对象编程，来操作关系型数据库。
+
+数据库的表（table） --> 类（class）
+记录（record，行数据）--> 对象（object）
+字段（field）--> 对象的属性（attribute）
+
