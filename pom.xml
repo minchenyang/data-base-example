@@ -6,7 +6,10 @@
 	<groupId>com.min</groupId>
 	<artifactId>demo</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<packaging>jar</packaging>
+    <modules>
+        <module>rocksDB</module>
+    </modules>
+    <packaging>pom</packaging>
 
 	<name>DataBase</name>
 	<description>DataBase</description>
